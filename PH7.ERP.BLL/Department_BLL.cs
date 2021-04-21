@@ -10,7 +10,10 @@ namespace PH7.ERP.BLL
         {
             return 1;
         }
-
+        public int GetGetDepartmentUpd()
+        {
+            return 1;
+        }
 
     }
 }
