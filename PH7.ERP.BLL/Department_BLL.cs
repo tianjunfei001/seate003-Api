@@ -6,5 +6,11 @@ namespace PH7.ERP.BLL
 {
     public class Department_BLL
     {
+        public int GetDepartmentAdd()
+        {
+            return 1;
+        }
+
+
     }
 }
