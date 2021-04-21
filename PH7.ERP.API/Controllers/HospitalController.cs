@@ -34,6 +34,15 @@ namespace PH7.ERP.API.Controllers
             return Ok(new { data = models });
         }
 
+        //获取医院管理页面 （问诊次数 医生数量）
+        [HttpGet]
+        [Route("GetHospList")]
+        public IActionResult GetHospList()
+        {
+            List<Hospital_Model> models = bLL.GetHospList();
+
+            return Ok(new { data = models });
+        }
 
 
     }
