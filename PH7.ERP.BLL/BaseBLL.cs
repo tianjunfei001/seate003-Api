@@ -56,7 +56,13 @@ namespace PH7.ERP.BLL
             string sql = GetHelper.GetDelSql<T>(id, key);
             return helper.ExceuteNonQuery(sql);
         }
-        //修改
+        /// <summary>
+        /// 修改 表数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dt"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public int GetUpdateTable<T>(T dt,string key)
         {
             string sql = GetHelper.GetUpdSql<T>(dt, key);

@@ -15,5 +15,9 @@ namespace PH7.ERP.Model
         public int Department_ID { get; set; }      //所属医院id
         public int Praise { get; set; }             //好评
         public string name { get; set; }           //等级名称
+
+        //额外字段
+        public int Cycount { get; set; }//医生人数
+        public int frequency { get; set; } //问诊次数
     }
 }

@@ -27,5 +27,10 @@ namespace PH7.ERP.Model
         public int Department_Id { get; set; }       //医生所属科室
         public int Grade_Id { get; set; }            //医生等级id
         public DateTime createtime { get; set; }     //创建时间
+
+        //额外字段
+        public string GradeName { get; set; }       //医生等级名字
+        public string Years { get; set; }           //年限
+        public int frequency { get; set; }          //问诊次数
     }
 }

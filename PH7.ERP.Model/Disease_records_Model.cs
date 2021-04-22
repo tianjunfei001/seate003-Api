@@ -15,12 +15,22 @@ namespace PH7.ERP.Model
     public class Disease_records_Model
     {
         public int id { get; set; }                  //id
-        public int DoctorId { get; set; }            //所属医生id
+        public int Doctor_Id { get; set; }            //所属医生id
+        public int patient_Id { get; set; }            //所属患者id
+        
         public string describe { get; set; }         //病情描述
         public string diagnosis { get; set; }        //诊断
         public int evaluate { get; set; }            //评价
         public int _money { get; set; }              //金额
         public int seate { get; set; }               //是否接诊
         public DateTime createtime { get; set; }     //创建日期
+
+        //额外字段
+        public string name { get; set; }               //患者真实姓名
+        public string Grade_Name { get; set; }         //医生等级名称
+        public int hospital_Id { get; set; }        //所属医院id
+        public string hospitalName { get; set; }       //医院名称
+
+
     }
 }

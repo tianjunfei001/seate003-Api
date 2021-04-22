@@ -44,7 +44,19 @@ namespace PH7.ERP.BLL
             return h;
         }
 
-       
+        
+        /// <summary>
+        /// 主治医师列表
+        /// </summary>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetDoct_relationList(int hospital_Id, int Department_Id,int Grade_Id)
+        {
+            string sql = $"select a.*,balance,Grade.name GradeName from Grade join (select  DoctorLog.*, frequency, Years from DoctorLog join Doctor_relation on DoctorLog.id = Doctor_relation.Doctor_ID where hospital_Id = {hospital_Id} and Department_Id = {Department_Id} and Grade_Id = {Grade_Id}) a on Grade.id = a.Grade_Id join Doctor_money on a.id = Doctor_money.Doctor_ID";
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+
+        }
 
 
     }

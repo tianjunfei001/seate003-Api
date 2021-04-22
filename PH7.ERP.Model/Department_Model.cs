@@ -16,5 +16,8 @@ namespace PH7.ERP.Model
         public string name { get; set; }       //科室名称
         public int Praise { get; set; }        //好评
         public string _home { get; set; }      //科室电话
+        //额外字段
+        public int Cycount { get; set; }//医生人数
+        public int frequency { get; set; } //问诊次数
     }
 }

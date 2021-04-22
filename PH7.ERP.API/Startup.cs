@@ -37,6 +37,8 @@ namespace PH7.ERP.API
             services.AddTransient<DoctorLog_BLL>();
             services.AddTransient<Grade_BLL>();
             services.AddTransient<Patient_BLL>();
+            services.AddTransient<Disease_records_BLL>();
+            
 
             //1.配置跨域处理，允许所有来源： 
             services.AddCors(options =>
