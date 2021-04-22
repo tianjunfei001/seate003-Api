@@ -11,12 +11,12 @@ namespace PH7.ERP.Model
     [Table("Doctor_relation")]
     public class Doctor_relation_Model
     {
-        public int id{ get; set; }
-        public int Doctor_ID{ get; set; }
-        public int Years{ get; set; }
-        public int frequency{ get; set; }
-        public int seate{ get; set; }
-        public DateTime createtime{ get; set; }
+        public int id { get; set; }          //id
+        public int Doctor_ID { get; set; }          //所属医生id
+        public int Years { get; set; }          //年限医龄
+        public int frequency { get; set; }          //问诊次数
+        public int seate { get; set; }          //状态 是否开始接诊
+        public DateTime createtime { get; set; }     //创建日期
     }
 
 

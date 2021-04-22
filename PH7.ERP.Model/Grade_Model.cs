@@ -11,8 +11,9 @@ namespace PH7.ERP.Model
     [Table("Grade")]
     public class Grade_Model
     {
-        public int id{ get; set; }
-        public int Department_ID{ get; set; }
-        public string name{ get; set; }
+        public int id { get; set; }      //ID
+        public int Department_ID { get; set; }      //所属医院id
+        public int Praise { get; set; }             //好评
+        public string name { get; set; }           //等级名称
     }
 }

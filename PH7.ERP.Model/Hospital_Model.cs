@@ -11,11 +11,11 @@ namespace PH7.ERP.Model
     [Table("hospital")]
     public class Hospital_Model
     {
-        public int id{ get; set; }
-        public string hospitalName{ get; set; }
-        public int Praise { get; set; }
-        public string _address { get; set; }
-        public string _home { get; set; }
+        public int id { get; set; }                //医院id
+        public string hospitalName { get; set; }   //医院名
+        public string _address { get; set; }       //地址
+        public int Praise { get; set; }            //好评
+        public string _home { get; set; }          //医院电话
 
 
         //额外字段

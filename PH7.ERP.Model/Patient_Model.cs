@@ -11,24 +11,21 @@ namespace PH7.ERP.Model
     [Table("patient")]
     public class Patient_Model
     {
-        public int id{ get; set; }
-        public string name{ get; set; }
-        public int age{ get; set; }
-        public string sex { get; set; }
-        public string height { get; set; }
-        public string _weight { get; set; }
-        public string kidney { get; set; }
-        public string marriage { get; set; }
-        public string birth { get; set; }
-        public string _case { get; set; }
-        public string liver_function { get; set; }
-        public int DoctorId{ get; set; }
-        public string describe { get; set; }
-        public string diagnosis { get; set; }
-        public string _phone { get; set; }
-        public int evaluate{ get; set; }
-        public int _money{ get; set; }
-        public int seate{ get; set; }
-        public DateTime createtime{ get; set; }
+        public int id { get; set; }                   //id
+        public string userName { get; set; }          //用户名
+        public string _password { get; set; }         //密码
+        public string _phone { get; set; }            //手机号
+        public int integral { get; set; }             //积分
+        public string name { get; set; }              //姓名
+        public int age { get; set; }                  //年龄
+        public string sex { get; set; }               //性别
+        public string height { get; set; }            //身高
+        public string _weight { get; set; }           //体重
+        public string kidney { get; set; }            //肾功能
+        public string marriage { get; set; }          //婚姻
+        public string birth { get; set; }             //生育
+        public string _case { get; set; }             //病例史
+        public string liver_function { get; set; }    //肝功能
+        public DateTime createtime { get; set; }      //创建日期
     }
 }

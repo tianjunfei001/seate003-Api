@@ -11,11 +11,11 @@ namespace PH7.ERP.Model
     [Table("Doctor_detailed")]
    public class Doctor_detailed_Model
     {
-        public int id{ get; set; }
-        public int Doctor_ID{ get; set; }
-        public int seate{ get; set; }
-        public int _money{ get; set; }
-        public string _order{ get; set; }
-        public DateTime createtime{ get; set; }
+        public int id { get; set; }          //id
+        public int Doctor_ID { get; set; }          //所属医生id
+        public int seate { get; set; }          //状态，收入支出
+        public int _money { get; set; }          //金额
+        public string _order { get; set; }     //订单明细
+        public DateTime createtime { get; set; }     //创建日期
     }
 }
