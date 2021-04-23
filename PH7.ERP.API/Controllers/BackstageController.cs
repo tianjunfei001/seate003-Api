@@ -455,6 +455,11 @@ namespace PH7.ERP.API.Controllers
             int h = doctorLog_BLL.GetUpdateTable(m, "id");
             return Ok(new { msg = h });
         }
+        [Route("tt"),HttpGet]
+        public IActionResult tt() 
+        {
+            return Ok("123456");
+        }
 
 
 
