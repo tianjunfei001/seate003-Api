@@ -250,6 +250,11 @@ namespace PH7.ERP.API.Controllers
         }
 
 
+
+
+
+
+
         /// <summary>
         /// 审核管理医生页面方法 判断状态
         /// </summary>
@@ -308,6 +313,46 @@ namespace PH7.ERP.API.Controllers
                 msg = "",
                 count = models.Count
             });
+        }
+
+
+        /// <summary>
+        /// 查看未通过审核方法显示原因  两表联查
+        /// </summary>
+        /// <param name="DoctorLog_id">医生id</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("GetDoctorYuan")]
+        public IActionResult GetDoctorYuan(int DoctorLog_id)
+        {
+            List<DoctorLog_Model> models = doctorLog_BLL.GetDoctorYuan(DoctorLog_id);
+           
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+
+        //通过医生资质方法
+        [HttpPost]
+        [Route("GetUpdateDoct_true")]
+        public IActionResult GetUpdateDoct_true(int DoctorLog_Id)
+        {
+            int h = doctorLog_BLL.GetUpdateDoct_true(DoctorLog_Id);
+            return Ok(new { msg=h });
+        }
+
+        //不通过医生资质方法
+        [HttpPost]
+        [Route("GetUpdateDoct_first")]
+        public IActionResult GetUpdateDoct_first(int DoctorLog_Id, string reason)
+        {
+            int h = doctorLog_BLL.GetUpdateDoct_first(DoctorLog_Id, reason);
+            return Ok(new { msg = h });
         }
 
 

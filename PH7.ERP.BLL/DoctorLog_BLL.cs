@@ -74,6 +74,44 @@ namespace PH7.ERP.BLL
         }
 
 
+        /// <summary>
+        /// 通过医生资质方法
+        /// </summary>
+        /// <param name="DoctorLog_Id">医生id</param>
+        /// <returns></returns>
+        public int GetUpdateDoct_true(int DoctorLog_Id)
+        {
+            string sql = $"exec DoctorLogSeate {DoctorLog_Id}";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+
+        /// <summary>
+        /// 不通过医生资质方法
+        /// </summary>
+        /// <param name="DoctorLog_Id">医生id</param>
+        /// <returns></returns>
+        public int GetUpdateDoct_first(int DoctorLog_Id,string reason)
+        {
+            string sql = $"exec DoctorLogSeatefales {DoctorLog_Id},'{reason}'";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+
+
+        /// <summary>
+        /// 查看未通过审核方法 两表联查
+        /// </summary>
+        /// <param name="DoctorLog_id">医生id</param>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetDoctorYuan(int DoctorLog_id)
+        {
+            string sql = $"select DoctorLog.*,reason from Doctor_audit join DoctorLog on Doctor_audit.DoctorLog_id={DoctorLog_id}";
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+        }
+
     }
 
 }

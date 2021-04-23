@@ -35,6 +35,10 @@ namespace PH7.ERP.Model
         public int frequency { get; set; }          //问诊次数
         public int balance { get; set; }          //总金额
 
-        
+        //
+        public string reason { get; set; }       //资质审核原因
+
+
+
     }
 }
