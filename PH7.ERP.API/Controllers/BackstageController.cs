@@ -250,6 +250,8 @@ namespace PH7.ERP.API.Controllers
         }
 
         //添加医生方法
+        [HttpPost]
+        [Route("GetAddDoctor")]
         public IActionResult GetAddDoctor(DoctorLog_Model m)
         {
             int h = doctorLog_BLL.GetAddTable(m, "id");
@@ -257,20 +259,26 @@ namespace PH7.ERP.API.Controllers
         }
 
         //删除医生方法
+        [HttpPost]
+        [Route("GetDelDoctor")]
         public IActionResult GetDelDoctor(string id)
         {
             int h = doctorLog_BLL.GetDelTable<DoctorLog_Model>(id,"id");
             return Ok(new { msg = h });
         }
         //修改患者方法
+        [HttpPost]
+        [Route("GetUpdDoctor")]
         public IActionResult GetUpdDoctor(DoctorLog_Model m)
         {
             int h = doctorLog_BLL.GetUpdateTable(m,"id");
             return Ok(new { msg = h });
         }
-        
+
 
         //添加患者方法
+        [HttpPost]
+        [Route("GetAddPatient")]
         public IActionResult GetAddPatient(Patient_Model m)
         {
             int h = doctorLog_BLL.GetAddTable(m, "id");
@@ -278,12 +286,16 @@ namespace PH7.ERP.API.Controllers
         }
 
         //删除患者方法
+        [HttpPost]
+        [Route("GetDelPatient")]
         public IActionResult GetDelPatient(string id)
         {
             int h = doctorLog_BLL.GetDelTable<Patient_Model>(id, "id");
             return Ok(new { msg = h });
         }
         //修改患者方法
+        [HttpPost]
+        [Route("GetUpdPatient")]
         public IActionResult GetUpdPatient(Patient_Model m)
         {
             int h = doctorLog_BLL.GetUpdateTable(m, "id");
