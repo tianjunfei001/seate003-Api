@@ -30,7 +30,10 @@ namespace PH7.ERP.Model
 
         //额外字段
         public string GradeName { get; set; }       //医生等级名字
-        public string Years { get; set; }           //年限
+        public int Years { get; set; }           //年限
         public int frequency { get; set; }          //问诊次数
+        public int balance { get; set; }          //总金额
+
+        
     }
 }

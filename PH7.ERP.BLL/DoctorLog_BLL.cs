@@ -59,6 +59,21 @@ namespace PH7.ERP.BLL
         }
 
 
+        /// <summary>
+        /// 审核管理医生页面方法 判断状态
+        /// </summary>
+        /// <param name="state">状态</param>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetDoct_State_relationList()
+        {
+            string sql = $"select DoctorLog.*,Years,hospitalName,Department.name,Grade.name from hospital join Department on hospital.id = Department.hospital_Id join Grade on Department.id = Grade.Department_ID join DoctorLog on Grade.id = DoctorLog.Grade_Id join Doctor_relation on DoctorLog.id = Doctor_relation.Doctor_ID";
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+
+        }
+
+
     }
 
 }

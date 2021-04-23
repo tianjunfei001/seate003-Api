@@ -26,10 +26,15 @@ namespace PH7.ERP.Model
         public DateTime createtime { get; set; }     //创建日期
 
         //额外字段
+
+
         public string name { get; set; }               //患者真实姓名
         public string Grade_Name { get; set; }         //医生等级名称
         public int hospital_Id { get; set; }        //所属医院id
         public string hospitalName { get; set; }       //医院名称
+
+        public string userName { get; set; }        //医生账户名
+        public string Doctor_Name { get; set; }        //医生真实名
 
 
     }

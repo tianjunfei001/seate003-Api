@@ -45,7 +45,7 @@ namespace PH7.ERP.API.Controllers
         }
 
         //获取医院管理页面 （问诊次数 医生数量）
-        [HttpPost]
+        [HttpGet]
         [Route("GetHospList")]
         public IActionResult GetHospList(int page = 1, int limit = 2,string name="")
         {
@@ -75,7 +75,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="limit"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDepaList")]
         public IActionResult GetDepaList(int hospital_Id, int page = 1, int limit = 2, string name = "")
         {
@@ -106,7 +106,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="limit"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetGradeList")]
         public IActionResult GetGradeList(int hospital_Id, int Department_Id, int page = 1, int limit = 2, string name = "")
         {
@@ -140,7 +140,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="limit"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDoct_relationList")]
         public IActionResult GetDoct_relationList(int hospital_Id, int Department_Id, int Grade_Id, int page = 1, int limit = 2, string name = "")
         {
@@ -172,7 +172,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="limit"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDiseaeList")]
         public IActionResult GetDiseaeList(int Doctor_Id,int page = 1, int limit = 2, string name = "")
         {
@@ -201,7 +201,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="limit"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetPatientList")]
         public IActionResult GetPatientList(int page = 1, int limit = 2, string name = "")
         {
@@ -231,7 +231,7 @@ namespace PH7.ERP.API.Controllers
         /// <param name="page"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDisease_recordsList")]
         public IActionResult GetDisease_recordsList(int patient_Id, int page = 1, int limit = 2)
         {
@@ -249,6 +249,66 @@ namespace PH7.ERP.API.Controllers
             });
         }
 
+
+        /// <summary>
+        /// 审核管理医生页面方法 判断状态
+        /// </summary>
+        /// <param name="state">状态 0待审核 1审核通过 2审核失败</param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="Years">年限查询</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDoct_State_relationList")]
+        public IActionResult GetDoct_State_relationList(int state, int page = 1, int limit = 2, int hospital_Id=-1, int Department_Id=-1, int Grade_Id=-1, int Years = -1)
+        {
+            List<DoctorLog_Model> models = doctorLog_BLL.GetDoct_State_relationList();
+            models = models.Where(p => p._state.Equals(state)).ToList();
+            if (Years!=-1)
+            {
+                models = models.Where(p => p.Years.Equals(Years)).ToList();
+            }
+            if (hospital_Id != -1)
+            {
+                models = models.Where(p => p.hospital_Id.Equals(hospital_Id)).ToList();
+            }
+            if (Department_Id != -1)
+            {
+                models = models.Where(p => p.Department_Id.Equals(Department_Id)).ToList();
+            }
+            if (Grade_Id != -1)
+            {
+                models = models.Where(p => p.Grade_Id.Equals(Grade_Id)).ToList();
+            }
+
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+        //审核管理医生页面方法(待审核功能反填)
+        [HttpPost]
+        [Route("GetDoct_Fan_relationList")]
+        public IActionResult GetDoct_Fan_relationList(int id)
+        {
+            List<DoctorLog_Model> models = doctorLog_BLL.GetDoct_State_relationList();
+            models = models.Where(p => p.id.Equals(id)).ToList();
+
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
         //添加医生方法
         [HttpPost]
         [Route("GetAddDoctor")]
@@ -301,6 +361,8 @@ namespace PH7.ERP.API.Controllers
             int h = doctorLog_BLL.GetUpdateTable(m, "id");
             return Ok(new { msg = h });
         }
+
+
 
     }
 }
