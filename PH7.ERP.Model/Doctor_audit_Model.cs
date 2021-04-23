@@ -16,6 +16,8 @@ namespace PH7.ERP.Model
         public int id { get; set; }              //id
         public int DoctorLog_id { get; set; }    //所属医生id
         public string reason { get; set; }       //不通过原因
+        public int _count { get; set; }         //审核次数
+
         public int seate { get; set; }           //是否通过
         public DateTime createtime { get; set; } //创建日期
                                                  
