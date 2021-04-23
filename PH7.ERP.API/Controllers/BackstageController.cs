@@ -215,6 +215,30 @@ namespace PH7.ERP.API.Controllers
             });
         }
 
+
+        /// <summary>
+        /// 诊断报告表
+        /// </summary>
+        /// <param name="Disease_records_id">诊断记录表ID</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPati_DiagnosisList")]
+        public IActionResult GetPati_DiagnosisList(int Disease_records_id)
+        {
+            List<Patient_Model> models = patient_BLL.GetPati_DiagnosisList(Disease_records_id);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+
+
+
         /// <summary>
         /// 患者列表（分页，查询）
         /// </summary>

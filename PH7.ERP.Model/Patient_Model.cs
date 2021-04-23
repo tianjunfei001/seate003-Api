@@ -29,5 +29,13 @@ namespace PH7.ERP.Model
         public string _case { get; set; }             //病例史
         public string liver_function { get; set; }    //肝功能
         public DateTime createtime { get; set; }      //创建日期
+
+
+        //额外字段
+        public string describe { get; set; }        //病情描述
+        public string diagnosis { get; set; }       //诊断报告
+
+
+
     }
 }
