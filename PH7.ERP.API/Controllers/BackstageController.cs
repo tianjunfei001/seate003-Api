@@ -16,17 +16,18 @@ namespace PH7.ERP.API.Controllers
     {
 
         //注入
-        Hospital_BLL bLL;
+        Hospital_BLL hospital_BLL;
         Department_BLL department_BLL;
         Grade_BLL grade_BLL;
         DoctorLog_BLL doctorLog_BLL;
         Disease_records_BLL disease_Records_BLL;
         Patient_BLL patient_BLL;
+        
 
         //构造函数
         public BackstageController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL)
         {
-            bLL = _BLL;
+            hospital_BLL = _BLL;
             department_BLL = _department_BLL;
             grade_BLL = _grade_BLL;
             doctorLog_BLL = _doctorLog_BLL;
@@ -37,9 +38,29 @@ namespace PH7.ERP.API.Controllers
         //获取医院表表
         [HttpGet]
         [Route("GetHost")]
-        public IActionResult GetHost()
+        public IActionResult GetDospital()
         {
-            List<Hospital_Model> models = bLL.GetHospital();
+            List<Hospital_Model> models = hospital_BLL.GetHospital();
+
+            return Ok(new { data = models });
+        }
+
+        //获取科室表
+        [HttpGet]
+        [Route("GetDepartment")]
+        public IActionResult GetDepartment()
+        {
+            List<Department_Model> models = department_BLL.GetShowTable<Department_Model>();
+
+            return Ok(new { data = models });
+        }
+
+        //获取科室表
+        [HttpGet]
+        [Route("GetGrade")]
+        public IActionResult GetGrade()
+        {
+            List<Grade_Model> models = grade_BLL.GetShowTable<Grade_Model>();
 
             return Ok(new { data = models });
         }
@@ -49,7 +70,7 @@ namespace PH7.ERP.API.Controllers
         [Route("GetHospList")]
         public IActionResult GetHospList(int page = 1, int limit = 2,string name="")
         {
-            List<Hospital_Model> models = bLL.GetHospList();
+            List<Hospital_Model> models = hospital_BLL.GetHospList();
 
             if (!string.IsNullOrEmpty(name))
             {
