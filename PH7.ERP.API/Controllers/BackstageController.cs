@@ -48,9 +48,10 @@ namespace PH7.ERP.API.Controllers
         //获取科室表
         [HttpGet]
         [Route("GetDepartment")]
-        public IActionResult GetDepartment()
+        public IActionResult GetDepartment(int hospital_Id=-1)
         {
             List<Department_Model> models = department_BLL.GetShowTable<Department_Model>();
+            models = models.Where(p => p.hospital_Id.Equals(hospital_Id)).ToList();
 
             return Ok(new { data = models });
         }
@@ -58,9 +59,10 @@ namespace PH7.ERP.API.Controllers
         //获取科室表
         [HttpGet]
         [Route("GetGrade")]
-        public IActionResult GetGrade()
+        public IActionResult GetGrade(int Department_Id=-1)
         {
             List<Grade_Model> models = grade_BLL.GetShowTable<Grade_Model>();
+            models = models.Where(p => p.Department_ID.Equals(Department_Id)).ToList();
 
             return Ok(new { data = models });
         }
