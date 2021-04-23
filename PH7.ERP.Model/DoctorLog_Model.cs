@@ -19,6 +19,7 @@ namespace PH7.ERP.Model
         public string userImg { get; set; }          //头像
         public int _state { get; set; }              //状态 是否有医生资格证
         public string _certificate { get; set; }     //证书图片路径
+        public int evaluate { get; set; }            //评价
         public string _address { get; set; }         //家庭住址
         public string university { get; set; }       //大学
         public string sex { get; set; }              //性别
