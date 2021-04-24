@@ -30,7 +30,7 @@ namespace PH7.ERP.API.Controllers
         }
 
         /// <summary>
-        /// 登录方法
+        /// 账号密码 登录方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="Password"></param>
@@ -43,6 +43,13 @@ namespace PH7.ERP.API.Controllers
 
             return Ok(new { seate = h >= 1 ? true : false });
         }
+
+
+        //手机号登录
+        //public IActionResult GetDoctLogHome(string Home)
+        //{
+
+        //}
 
 
         //手机号登录

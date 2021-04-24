@@ -15,6 +15,7 @@ namespace PH7.ERP.Model
         public string userName { get; set; }          //用户名
         public string _password { get; set; }         //密码
         public string _phone { get; set; }            //手机号
+        public string _tou { get; set; }            //--头像							
         public int integral { get; set; }             //积分
         public int Consultation { get; set; }         //总问诊次数
         public int moneySum { get; set; }             //总支付金额

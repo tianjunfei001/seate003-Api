@@ -43,6 +43,18 @@ namespace PH7.ERP.BLL
             return GetHelper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
         }
 
+        /// <summary>
+        /// 患者手机端注册方法 返回当前id
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetPatientRegister(Patient_Model m)
+        {
+            string sql = $"insert into patient(userName,_password,_phone,_tou) values('{m.userName}','{m._password}','{m._phone}','{m._tou}');select @@IDENTITY";
+            int h = Convert.ToInt32(helper.ExecuteScalar(sql));
+
+            return h;
+        }
 
 
     }
