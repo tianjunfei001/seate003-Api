@@ -345,7 +345,7 @@ namespace PH7.ERP.API.Controllers
         }
 
         //审核管理医生页面方法(待审核功能反填)
-        [HttpPost]
+        [HttpGet]
         [Route("GetDoct_Fan_relationList")]
         public IActionResult GetDoct_Fan_relationList(int id)
         {
@@ -385,7 +385,7 @@ namespace PH7.ERP.API.Controllers
 
 
         //通过医生资质方法
-        [HttpPost]
+        [HttpGet]
         [Route("GetUpdateDoct_true")]
         public IActionResult GetUpdateDoct_true(int DoctorLog_Id)
         {
@@ -394,7 +394,7 @@ namespace PH7.ERP.API.Controllers
         }
 
         //不通过医生资质方法
-        [HttpPost]
+        [HttpGet]
         [Route("GetUpdateDoct_first")]
         public IActionResult GetUpdateDoct_first(int DoctorLog_Id, string reason)
         {
