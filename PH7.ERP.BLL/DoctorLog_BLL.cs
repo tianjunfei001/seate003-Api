@@ -138,7 +138,23 @@ namespace PH7.ERP.BLL
             return h;
         }
 
-
+        /// <summary>
+        /// 医生端接诊台页面 方法
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public List<Patient_Model> GetDoctor_Platform(string State, string Sname)
+        {
+            string sql = $"select * from patient join Disease_records on patient.id=Disease_records.patient_Id where 1=1 and Disease_records.seate='{State}'";
+            if (!string.IsNullOrEmpty(Sname))
+            {
+                sql += $"and patient.name like '%{Sname}%' or patient._phone like '%{Sname}%'";
+            }
+            var dataSet = helper.GetDataSet(sql);
+            List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+            return list;
+        }
     }
+ 
 
 }

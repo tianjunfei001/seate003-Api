@@ -35,7 +35,7 @@ namespace PH7.ERP.Model
         //额外字段
         public string describe { get; set; }        //病情描述
         public string diagnosis { get; set; }       //诊断报告
-
+        public int _money { get; set; }          //金额
 
 
     }

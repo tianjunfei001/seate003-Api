@@ -39,7 +39,7 @@ namespace PH7.ERP.API.Controllers
             disease_Records_BLL = _disease_Records_BLL;
             patient_BLL = _patient_BLL;
         }
-
+       
         /// <summary>
         /// 账号密码 登录方法
         /// </summary>
@@ -85,7 +85,19 @@ namespace PH7.ERP.API.Controllers
             return Ok(new { seate = h });
         }
 
-
+        /// <summary>
+        /// 接诊台显示查询 ——平台
+        /// </summary>
+        /// <param name="Sname">查询患者姓名手机号</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPlatform")]
+        public IActionResult GetPlatform(int pageindex, int pagesize, string State, string Sname)
+        {
+            var list = doctorLog_BLL.GetDoctor_Platform(State,Sname);
+            var _list = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
+            return Ok(new { data = _list, count = list.Count });
+        }
         //手机号登录
         /// ========================================程序配置参数区开始
 
@@ -288,6 +300,6 @@ namespace PH7.ERP.API.Controllers
         }
 
 
-
+        
     }
 }
