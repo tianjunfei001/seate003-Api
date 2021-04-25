@@ -112,6 +112,33 @@ namespace PH7.ERP.BLL
             return list;
         }
 
+
+        /// <summary>
+        /// 手机号登录  查询
+        /// </summary>
+        /// <param name="_phone">手机号</param>
+        /// <returns></returns>
+        public int GetDoctLog_phone(string cellPhone)
+        {
+            string sql = $"select count(*) from DoctorLog where cellPhone='{cellPhone}'";
+            int h = Convert.ToInt32(helper.ExecuteScalar(sql));
+            return h;
+        }
+
+        /// <summary>
+        /// 医生端注册页面 注册方法
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetDoctLog_Zhuci(DoctorLog_Model m)
+        {
+            string sql = $"insert into DoctorLog(userName,_password,cellPhone) values('{m.userName}','{m._password}','{m.cellPhone}')";
+
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+
+
     }
 
 }

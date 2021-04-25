@@ -21,12 +21,23 @@ namespace PH7.ERP.API.Controllers
     {
 
         //注入
-        DoctorLog_BLL bLL;
+        Hospital_BLL hospital_BLL;
+        Department_BLL department_BLL;
+        Grade_BLL grade_BLL;
+        DoctorLog_BLL doctorLog_BLL;
+        Disease_records_BLL disease_Records_BLL;
+        Patient_BLL patient_BLL;
+
 
         //构造函数
-        public DoctorLogController(DoctorLog_BLL _BLL)
+        public DoctorLogController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL)
         {
-            bLL = _BLL;
+            hospital_BLL = _BLL;
+            department_BLL = _department_BLL;
+            grade_BLL = _grade_BLL;
+            doctorLog_BLL = _doctorLog_BLL;
+            disease_Records_BLL = _disease_Records_BLL;
+            patient_BLL = _patient_BLL;
         }
 
         /// <summary>
@@ -37,19 +48,42 @@ namespace PH7.ERP.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("GetDoctLog")]
-        public IActionResult GetDoctLog(string userName, string Password)
+        public IActionResult GetDoctLog(DoctorLog_Model m)
         {
-            int h = bLL.GetDoctorLog(userName, Password);
+            int h = doctorLog_BLL.GetDoctorLog(m.userName, m._password);
 
-            return Ok(new { seate = h >= 1 ? true : false });
+            return Ok(new { seate = h});
         }
 
 
-        //手机号登录
-        //public IActionResult GetDoctLogHome(string Home)
-        //{
+        /// <summary>
+        /// 手机号登录 判断是否成功
+        /// </summary>
+        /// <param name="cellPhone">手机号码</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDoctLogHome")]
+        public IActionResult GetDoctLogHome(string cellPhone)
+        {
+            int h = doctorLog_BLL.GetDoctLog_phone(cellPhone);
 
-        //}
+            return Ok(new { seate = h });
+        }
+
+
+        /// <summary>
+        /// 医生端注册页面 注册方法
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("GetDoctLog_Zhuci")]
+        public IActionResult GetDoctLog_Zhuci(DoctorLog_Model m)
+        {
+            int h = doctorLog_BLL.GetDoctLog_Zhuci(m);
+
+            return Ok(new { seate = h });
+        }
 
 
         //手机号登录
@@ -72,7 +106,7 @@ namespace PH7.ERP.API.Controllers
         /// ========================================程序配置参数区结束
 
         //验证码方法
-        [HttpPost]
+        [HttpGet]
         [Route("GetYan")]
         public IActionResult GetYan(string tel)
         {
