@@ -111,7 +111,57 @@ namespace PH7.ERP.BLL
             List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
             return list;
         }
+        ///Bll医生诊断   HCM添加
+        /// <summary>
+        /// 获取所属医生的患者资料  是否接诊 未0 已接诊1
+        /// </summary>
+        /// <param name="DoctorId">医生 id</param>
+        /// <param name="seate">是否接诊 未0 已接诊1</param>
+        /// <returns></returns>
+        public List<Patient_Model> GetDoctPatiList(int DoctorId, int seate)
+        {
+            string sql = $"select * from patient where DoctorId={DoctorId} and seate={seate}";
+            DataSet dataSet = helper.GetDataSet(sql);
+            return GetHelper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+        }
+        //默认未接诊
+        public List<Disease_records_Model> Get_Records()
+        {
+            string sql = $"select *from Disease_records join patient on Disease_records.patient_Id=patient.id where seate=0";
+            DataSet dataSet = helper.GetDataSet(sql);
+            return GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+        }
+        //已接诊
+        public List<Disease_records_Model> Get_yes()
+        {
+            string sql = $"select *from Disease_records join patient on Disease_records.patient_Id=patient.id where seate=1";
+            DataSet dataSet = helper.GetDataSet(sql);
+            return GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+        }
+        //健康档案
+        public Patient_Model Get_By(string id)
+        {
+            string sql = $"select * from patient where id={id}";
+            DataSet dataSet = helper.GetDataSet(sql);
+            var list = GetHelper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+            return list[0];
+        }
+        //诊断管理
+        public List<Disease_records_Model> Get_zdgl()
+        {
+            string sql = $"select createtime,sum(_money) Total,count(id) Patients from Disease_records group by createtime";          
+            DataSet dataSet = helper.GetDataSet(sql);
 
+            return GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+        }
+        //诊断列表
+        public List<Disease_records_Model> Get_Administrationlist(string sickdate) 
+        {
+            string sql = $"select* from Disease_records join patient on Disease_records.patient_Id = patient.id where Disease_records.createtime = '{sickdate}' ";
+            DataSet dataSet = helper.GetDataSet(sql);
+            return GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+        }
+        ////////////////////////////////////////////
 
         /// <summary>
         /// 手机号登录  查询

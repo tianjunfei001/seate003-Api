@@ -39,7 +39,86 @@ namespace PH7.ERP.API.Controllers
             disease_Records_BLL = _disease_Records_BLL;
             patient_BLL = _patient_BLL;
         }
+        /////////医生端接诊台
+        /// 默认未接诊
+        [HttpGet]
+        [Route("GetDis")]
+        public IActionResult GetDis(int page = 1, int limit = 2)
+        {
+            List<Disease_records_Model> models = doctorLog_BLL.Get_Records();
 
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+        //已接诊
+        [HttpGet]
+        [Route("GetDyes")]
+        public IActionResult GetDyes(int page = 1, int limit = 2)
+        {
+            List<Disease_records_Model> models = doctorLog_BLL.Get_yes();
+
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+        //诊断管理页
+        [HttpGet]
+        [Route("Getzd")]
+        public IActionResult Getzd(int page = 1, int limit = 2)
+        {
+            List<Disease_records_Model> models = doctorLog_BLL.Get_zdgl();
+
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+        //健康档案反填
+        [HttpGet]
+        [Route("GetFt")]
+        public IActionResult GetFt(string id)
+        {
+            var gft = doctorLog_BLL.Get_By(id);
+            return Ok(new { data = gft });
+        }
+
+        [HttpGet]
+        [Route("GetAlist")]
+        public IActionResult GetAlist(string sickdate, int page = 1, int limit = 2)
+        {
+            List<Disease_records_Model> models = doctorLog_BLL.Get_Administrationlist(sickdate);
+
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+        ////////////////////////////////////////
         /// <summary>
         /// 账号密码 登录方法
         /// </summary>
