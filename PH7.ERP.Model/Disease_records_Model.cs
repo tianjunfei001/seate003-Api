@@ -36,6 +36,11 @@ namespace PH7.ERP.Model
         public string userName { get; set; }        //医生账户名
         public string Doctor_Name { get; set; }        //医生真实名
 
+        //Hcm添加额外字段
+        public int age { get; set; }  //年龄
+        public int Total { get; set; }   //总金额
+        public int Patients { get; set; } //总患者数量
+        public string Tim { get { return createtime.ToString("yyyy-MM-dd"); } set { } } //总患者数量
 
     }
 }
