@@ -141,7 +141,7 @@ namespace PH7.ERP.BLL
         //健康档案
         public Patient_Model Get_By(string id)
         {
-            string sql = $"select * from patient where id={id}";
+            string sql = $"select * from patient join Disease_records on Disease_records.patient_Id=patient.id where patient.id='{id}'";
             DataSet dataSet = helper.GetDataSet(sql);
             var list = GetHelper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
             return list[0];
@@ -161,6 +161,22 @@ namespace PH7.ERP.BLL
             DataSet dataSet = helper.GetDataSet(sql);
             return GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
         }
+        //好评评价
+        public Disease_records_Model Get_Acclaim(string id)
+        {
+            string sql = $"select * from Disease_records join patient on Disease_records.patient_Id=patient.id where Disease_records.id='{id}'";
+            DataSet dataSet = helper.GetDataSet(sql);
+            var list = GetHelper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+            return list[0];
+        }
+        //接诊改
+        public int Get_Reception(string id)
+        {
+            string sql = $"update Disease_records set seate=1 where id='{id}'";
+            int result = helper.ExceuteNonQuery(sql);
+            return result;
+        }
+
         ////////////////////////////////////////////
 
         /// <summary>

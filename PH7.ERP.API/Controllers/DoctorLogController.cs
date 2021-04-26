@@ -98,10 +98,10 @@ namespace PH7.ERP.API.Controllers
         [Route("GetFt")]
         public IActionResult GetFt(string id)
         {
-            var gft = doctorLog_BLL.Get_By(id);
-            return Ok(new { data = gft });
+            var models = doctorLog_BLL.Get_By(id);
+            return Ok(new { data = models });
         }
-
+        //诊断列表
         [HttpGet]
         [Route("GetAlist")]
         public IActionResult GetAlist(string sickdate, int page = 1, int limit = 2)
@@ -117,6 +117,21 @@ namespace PH7.ERP.API.Controllers
                 msg = "",
                 count = models.Count
             });
+        }
+        //好评反
+        [HttpGet]
+        [Route("GetAcclim")]
+        public IActionResult GetAcclim(string id) 
+        {
+            var models = doctorLog_BLL.Get_Acclaim(id);
+            return Ok(new { data = models,code=0 });
+        }
+        [HttpPut]
+        [Route("GetUpdrn")]
+        public IActionResult GetUpdrn(string id)
+        {
+            var models = doctorLog_BLL.Get_Reception(id);
+            return Ok(new { data = models, code = 0 });
         }
         ////////////////////////////////////////
         /// <summary>
