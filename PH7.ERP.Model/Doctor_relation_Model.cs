@@ -16,6 +16,7 @@ namespace PH7.ERP.Model
         public int Years { get; set; }          //年限医龄
         public int frequency { get; set; }          //问诊次数
         public int seate { get; set; }          //状态 是否开始接诊
+        public int _money { get; set; }          //金额
         public DateTime createtime { get; set; }     //创建日期
     }
 
