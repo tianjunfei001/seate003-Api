@@ -27,10 +27,12 @@ namespace PH7.ERP.API.Controllers
         DoctorLog_BLL doctorLog_BLL;
         Disease_records_BLL disease_Records_BLL;
         Patient_BLL patient_BLL;
+        Doctor_detailed_BLL doctor_Detailed_Bll;
+        Doctor_money_BLL doctor_Money_BLL;
 
 
         //构造函数
-        public DoctorLogController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL)
+        public DoctorLogController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL, Doctor_detailed_BLL _doctor_Detailed_Bll, Doctor_money_BLL _doctor_Money_BLL)
         {
             hospital_BLL = _BLL;
             department_BLL = _department_BLL;
@@ -38,6 +40,8 @@ namespace PH7.ERP.API.Controllers
             doctorLog_BLL = _doctorLog_BLL;
             disease_Records_BLL = _disease_Records_BLL;
             patient_BLL = _patient_BLL;
+            doctor_Detailed_Bll = _doctor_Detailed_Bll;
+            doctor_Money_BLL = _doctor_Money_BLL;
         }
 
         /// <summary>
@@ -84,8 +88,50 @@ namespace PH7.ERP.API.Controllers
 
             return Ok(new { seate = h });
         }
+        /// <summary>
+        /// 流水明细
+        /// </summary>
+        /// <param name="Doctor_ID"></param>
+        /// <param name="limit"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
 
-
+        [HttpGet]
+        [Route("GetDoctor_detailed")]
+        public IActionResult GetDoctor_detailed(int Doctor_ID,int limit=10,int page=1) 
+        {
+            List<Doctor_detailed_Model> list = doctor_Detailed_Bll.GetDoctor_detailed(Doctor_ID);
+           //求和
+            
+            var _list = list.Skip((page-1)* limit).Take(limit).ToList();
+            return Ok(new {code=0, data = _list,count= list.Count, });
+        }
+        /// <summary>
+        /// 获取用户余额
+        /// </summary>
+        /// <param name="Doctor_ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Getbalance")]
+        public IActionResult Getbalance(int Doctor_ID) 
+        {
+             List<Doctor_money_Model> list = doctor_Money_BLL.GetDoctor_money(Doctor_ID);
+             return Ok(new { data = (list[0].balance).ToString() });
+        }
+        /// <summary>
+        /// 获取医生绑定的银行卡
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="Doctor_ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetBindCardlist")]
+        public IActionResult GetBindCardlist() 
+        {
+            //int id, int Doctor_ID
+            List<Doctor_bankcard_Model> list = doctor_Money_BLL.GetBindGetBank();
+            return Ok(new { code=0,data = list });
+        }
         //手机号登录
         /// ========================================程序配置参数区开始
 

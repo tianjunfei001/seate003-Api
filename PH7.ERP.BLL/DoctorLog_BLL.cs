@@ -137,6 +137,8 @@ namespace PH7.ERP.BLL
             int h = helper.ExceuteNonQuery(sql);
             return h;
         }
+        
+        
 
 
     }
