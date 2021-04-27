@@ -24,11 +24,19 @@ namespace PH7.ERP.BLL
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>
         /// <returns></returns>
-        public int GetDoctorLog(string userName, string password)
+        public DoctorLog_Model GetDoctorLog(string userName, string password)
         {
             string sql = $"select * from DoctorLog where userName='{userName}' and _password='{password}'";
-            int h = Convert.ToInt32(helper.ExecuteScalar(sql));
-            return h >= 1 ? 1 : 0;
+            DataSet dataSet = helper.GetDataSet(sql);
+            if (dataSet != null && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows.Count > 0)
+                {
+                    List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+                    return list[0];
+                }
+            }
+            return null;
         }
 
 
@@ -208,9 +216,9 @@ namespace PH7.ERP.BLL
 
 
         /// <summary>
-        /// 医生端接诊台页面 方法
+        /// 医生端接诊台 方法
         /// </summary>
-        /// <param name="m"></param>
+        /// <param name="Platform">站台</param>
         /// <returns></returns>
         public List<Patient_Model> GetDoctor_Platform(string State, string Sname)
         {
@@ -223,6 +231,58 @@ namespace PH7.ERP.BLL
             List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
             return list;
         }
+
+
+        /// <summary>
+        /// 医生端个人信息 方法
+        /// </summary>
+        /// <param name="Personal">个人</param>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetDoctor_Personal()
+        {
+            string sql = $"select DoctorLog.*,Grade.name Grade_name,Doctor_relation.Years,hospital.hospitalName from DoctorLog join Doctor_relation on DoctorLog.id=Doctor_relation.Doctor_ID join hospital on DoctorLog.hospital_Id = hospital.id join Grade on DoctorLog.Grade_Id = Grade.id";
+            var dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+        }
+        /// <summary>
+        ///  医生端修改密码信息  方法
+        /// </summary>
+        /// <param name="ChangePassword">修改密码</param>
+        /// <returns></returns>
+        public int ChangePassword(string Mima, string number)
+        {
+            string sql = $"update DoctorLog set _password='{Mima}' where id={number}";
+            return helper.ExceuteNonQuery(sql);
+        }
+        /// <summary>
+        /// 医生端修改个人信息  方法
+        /// </summary>
+        /// <param name="ModifyUser">修改用户</param>
+        /// <returns></returns>
+        public int GetModifyUser(string GetUser, string Mima, string number)
+        {
+            string sql = $"update DoctorLog set  userName='{GetUser}',_password='{Mima}' where id={number}";
+            return helper.ExceuteNonQuery(sql);
+        }
+        /// <summary>
+        /// 医生端诊断管理  方法
+        /// </summary>
+        /// <param name="Diagnosis">诊断</param>
+        /// <returns></returns>
+        public List<Patient_Model> GetDiagnosis(string GetName)
+        {
+            string sql = $"select * from patient join Disease_records on Disease_records.patient_Id=patient.id where 1=1";
+            if (!string.IsNullOrEmpty(GetName))
+            {
+                sql += $" and patient.name like '%{GetName}%' or patient._phone like '%{GetName}%'";
+            }
+            var dataSet = helper.GetDataSet(sql);
+            List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+            return list;
+        }
+
+
 
         /// <summary>
         /// 账号管理医生显示

@@ -510,7 +510,6 @@ namespace PH7.ERP.API.Controllers
             return Ok(list);
         }
 
-
         //查看患者账号管理
         [HttpGet]
         [Route("GetShowPatientList")]

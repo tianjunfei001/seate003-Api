@@ -139,20 +139,26 @@ namespace PH7.ERP.API.Controllers
             var models = doctorLog_BLL.Get_Reception(id);
             return Ok(new { data = models, code = 0 });
         }
-        ////////////////////////////////////////
         /// <summary>
         /// 账号密码 登录方法
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="Password"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDoctLog")]
-        public IActionResult GetDoctLog(DoctorLog_Model m)
+        public IActionResult GetDoctLog(string userName, string password)
         {
-            int h = doctorLog_BLL.GetDoctorLog(m.userName, m._password);
+            var list = doctorLog_BLL.GetDoctorLog(userName, password);
 
-            return Ok(new { seate = h});
+            if (list != null)
+            {
+                return Ok(new { _list = true, msg = $"尊贵的V10{list.userName}先生欢迎来到了第10区", data = list });
+            }
+            else
+            {
+                return Ok(new { _list = false, msg = $"用户名或密码错误！！！", data = "" });
+            }
         }
 
 
@@ -245,6 +251,59 @@ namespace PH7.ERP.API.Controllers
             return Ok(new { code = 0, data = list });
         }
 
+
+
+        /// <summary>
+        /// 医生端个人信息显示
+        /// </summary>
+        /// <param name="Personal">个人</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPersonal")]
+        public IActionResult GetPersonal()
+        {
+            var list = doctorLog_BLL.GetDoctor_Personal();
+            return Ok(new { data = list });
+        }
+        /// <summary>
+        /// 医生端密码信息修改
+        /// </summary>
+        /// <param name="Personal">个人</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPassword")]
+        public IActionResult GetPassword(string Mima, string number)
+        {
+            var list = doctorLog_BLL.ChangePassword(Mima, number);
+            return Ok(new { data = list > 0 ? "修改密码成功" : "修改密码失败", msg = list > 0 ? true : false });
+        }
+        /// <summary>
+        /// 医生端修改用户密码 
+        /// </summary>
+        /// <param name="ChangeUser">改用户</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetChangeUser")]
+
+        public IActionResult GetChangeUser(string GetUser, string Mima, string number)
+        {
+            var list = doctorLog_BLL.GetModifyUser(GetUser, Mima, number);
+            return Ok(new { data = list > 0 ? "修改成功" : "修改失败", msg = list > 0 ? true : false });
+        }
+        /// <summary>
+        /// 医生端诊断管理
+        /// </summary>
+        /// <param name="Management">管理</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetManagement")]
+
+        public IActionResult GetManagement(int pageindex, int pagesize, string GetName)
+        {
+            var list = doctorLog_BLL.GetDiagnosis(GetName);
+            var _list = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
+            return Ok(new { data = _list, count = list.Count });
+        }
 
 
 
