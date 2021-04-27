@@ -368,7 +368,7 @@ namespace PH7.ERP.API.Controllers
         /// </summary>
         /// <param name="DoctorLog_id">医生id</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetDoctorYuan")]
         public IActionResult GetDoctorYuan(int DoctorLog_id)
         {
