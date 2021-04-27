@@ -403,23 +403,9 @@ namespace PH7.ERP.API.Controllers
         }
 
 
-        //添加医生方法
-        [HttpPost]
-        [Route("GetAddDoctor")]
-        public IActionResult GetAddDoctor(DoctorLog_Model m)
-        {
-            int h = doctorLog_BLL.GetAddTable(m, "id");
-            return Ok(new { msg = h });
-        }
+       
 
-        //删除医生方法
-        [HttpPost]
-        [Route("GetDelDoctor")]
-        public IActionResult GetDelDoctor(string id)
-        {
-            int h = doctorLog_BLL.GetDelTable<DoctorLog_Model>(id,"id");
-            return Ok(new { msg = h });
-        }
+       
         //修改患者方法
         [HttpPost]
         [Route("GetUpdDoctor")]
@@ -440,7 +426,7 @@ namespace PH7.ERP.API.Controllers
         }
 
         //删除患者方法
-        [HttpPost]
+        [HttpGet]
         [Route("GetDelPatient")]
         public IActionResult GetDelPatient(string id)
         {
@@ -455,10 +441,108 @@ namespace PH7.ERP.API.Controllers
             int h = doctorLog_BLL.GetUpdateTable(m, "id");
             return Ok(new { msg = h });
         }
-        [Route("tt"),HttpGet]
-        public IActionResult tt() 
+
+        //查看医生账号管理
+        [HttpGet]
+        [Route("GetShowDoctorList")]
+        public IActionResult GetShowDoctorList(string name = "", string phone = "", int page = 1, int limit = 5)
         {
-            return Ok("123456");
+            List<DoctorLog_Model> models = doctorLog_BLL.GetShowDoctorList();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.userName.Contains(name)).ToList();
+            }
+            if (!string.IsNullOrEmpty(phone))
+            {
+                models = models.Where(p => p.cellPhone.Contains(phone)).ToList();
+            }
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = _models,
+                count = models.Count
+            });
+        }
+
+
+        //添加医生方法
+        [HttpPost]
+        [Route("GetAddDoctor")]
+        public IActionResult GetAddDoctor(DoctorLog_Model m)
+        {
+            if (m.id == 0)
+            {
+                int h = doctorLog_BLL.GetAddDoctors(m);
+                return Ok(new { msg = h > 0 ? true : false, mrg = h > 0 ? "添加成功！" : "添加失败！" });
+            }
+            else
+            {
+                int h = doctorLog_BLL.GetupdDoctors(m);
+                return Ok(new { msg = h > 0 ? true : false, mrg = h > 0 ? "修改成功！" : "修改失败！" });
+            }
+        }
+        //医生账号管理反填
+        [HttpGet]
+        [Route("GetFanDoctor")]
+        public IActionResult GetFanDoctor(int id)
+        {
+            var list = doctorLog_BLL.GetFanDoctor(id);
+            return Ok(list);
+        }
+        //修改患者方法
+        [HttpPost]
+        [Route("GetupdPatient")]
+        public IActionResult GetupdPatient(Patient_Model m)
+        {
+            int h = patient_BLL.GetupdPatient(m);
+            return Ok(new { msg = h > 0 ? true : false, mrg = h > 0 ? "修改成功！" : "修改失败！" });
+        }
+        //医生账号患者反填
+        [HttpGet]
+        [Route("GetFanPatient")]
+        public IActionResult GetFanPatient(int id)
+        {
+            var list = patient_BLL.GetFanPatient(id);
+            return Ok(list);
+        }
+
+
+        //查看患者账号管理
+        [HttpGet]
+        [Route("GetShowPatientList")]
+        public IActionResult GetShowPatientList(string name = "", string phone = "", int page = 1, int limit = 5)
+        {
+            List<Patient_Model> models = patient_BLL.GetShowPatientList();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.userName.Contains(name)).ToList();
+            }
+            if (!string.IsNullOrEmpty(phone))
+            {
+                models = models.Where(p => p._phone.Contains(phone)).ToList();
+            }
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = _models,
+                count = models.Count
+            });
+        }
+        //删除医生方法
+        [HttpGet]
+        [Route("GetDelDoctor")]
+        public IActionResult GetDelDoctor(string id)
+        {
+            int h = doctorLog_BLL.GetDelTable<DoctorLog_Model>(id, "id");
+            return Ok(new { msg = h });
         }
 
 

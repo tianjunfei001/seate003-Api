@@ -37,7 +37,9 @@ namespace PH7.ERP.Model
 
         //
         public string reason { get; set; }       //资质审核原因
-
+                                                 //
+        public string Grade_name { get; set; } //账号管理医生等级名称
+        public string hospitalName { get; set; } //账号管理医生隶属医院名称
 
 
     }

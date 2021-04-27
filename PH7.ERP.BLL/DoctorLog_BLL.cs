@@ -223,11 +223,58 @@ namespace PH7.ERP.BLL
             List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
             return list;
         }
-    
+
+        /// <summary>
+        /// 账号管理医生显示
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetShowDoctorList()
+        {
+            string sql = $"select hospitalName,Department.name Department_name,Grade.name Grade_name,DoctorLog.* from hospital  join Department on hospital.id = Department.hospital_Id join Grade on Department.id = Grade.Department_ID join DoctorLog on Grade.id = DoctorLog.Grade_Id";
+
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+        }
+
+        /// <summary>
+        /// 账号管理医生添加
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetAddDoctors(DoctorLog_Model d)
+        {
+            string sql = $"insert into DoctorLog(userName,hospital_Id,Grade_Id,_password,cellPhone) values('{d.userName}',{d.hospital_Id},{d.Grade_Id},'{d._password}','{d.cellPhone}')";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+        /// <summary>
+        /// 账号管理医生修改
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetupdDoctors(DoctorLog_Model d)
+        {
+            string sql = $"update DoctorLog set userName='{d.userName}',hospital_Id={d.hospital_Id},Grade_Id={d.Grade_Id},_password='{d._password}',cellPhone='{d.cellPhone}' where id={d.id}";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+        /// <summary>
+        /// 账号管理医生反填
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public DoctorLog_Model GetFanDoctor(int id)
+        {
+            string sql = $"select hospitalName,Department.name Department_name,Grade.name Grade_name,DoctorLog.* from hospital  join Department on hospital.id = Department.hospital_Id join Grade on Department.id = Grade.Department_ID join DoctorLog on Grade.id = DoctorLog.Grade_Id where DoctorLog.id={id}";
+
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list[0];
+        }
 
 
-
-
-}
+    }
 
 }

@@ -56,8 +56,42 @@ namespace PH7.ERP.BLL
             return h;
         }
 
-       
+        /// <summary>
+        /// 患者管理医生显示
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public List<Patient_Model> GetShowPatientList()
+        {
+            string sql = $"select * from patient where 1=1 ";
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+            return list;
+        }
+        /// <summary>
+        /// 账号管理患者修改
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetupdPatient(Patient_Model d)
+        {
+            string sql = $"update patient set userName='{d.userName}',_phone='{d._phone}',_password='{d._password}' where id={d.id}";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+        /// <summary>
+        /// 账号管理患者反填
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public DoctorLog_Model GetFanPatient(int id)
+        {
+            string sql = $"select * from patient where id={id}";
 
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list[0];
+        }
 
     }
 }
