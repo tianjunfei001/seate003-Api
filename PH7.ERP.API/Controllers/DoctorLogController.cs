@@ -132,7 +132,7 @@ namespace PH7.ERP.API.Controllers
             return Ok(new { data = models, code = 0 });
         }
         //接诊改
-        [HttpPut]
+        [HttpGet]
         [Route("GetUpdrn")]
         public IActionResult GetUpdrn(string id)
         {
