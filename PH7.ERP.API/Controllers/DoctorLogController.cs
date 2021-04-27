@@ -216,14 +216,63 @@ namespace PH7.ERP.API.Controllers
 
         [HttpGet]
         [Route("GetDoctor_detailed")]
-        public IActionResult GetDoctor_detailed(int Doctor_ID, int limit = 10, int page = 1)
+        public IActionResult GetDoctor_detailed(int Doctor_ID, DateTime begintime, DateTime endtime, int limit = 10, int page = 1)
+        {
+            List<Doctor_detailed_Model> list = doctor_Detailed_Bll.GetDoctor_detailed(Doctor_ID);
+            if (begintime.ToString() != "0001/1/1 0:00:00")
+            {
+                list = list.Where(s => s.createtime > begintime).ToList();
+                if (endtime.ToString() != "0001/1/1 0:00:00")
+                {
+                    list = list.Where(s => s.createtime < endtime).ToList();
+                }
+            }
+
+            //求和
+            var SumIncome = 0;//收入
+            foreach (var item in list.Where(s => s.seate == 1))
+            {
+                SumIncome = item._money;
+            }
+            var SumExpend = 0;  //支出
+            foreach (var item in list.Where(s => s.seate == 0))
+            {
+                SumExpend = item._money;
+            }
+            var _list = list.Skip((page - 1) * limit).Take(limit).ToList();
+            return Ok(new { code = 0, data = _list, count = list.Count });
+        }
+        /// <summary>
+        /// 收入和支出
+        /// </summary>
+        /// <param name="Doctor_ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetIncomeExpend")]
+        public IActionResult GetIncomeExpend(int Doctor_ID)
         {
             List<Doctor_detailed_Model> list = doctor_Detailed_Bll.GetDoctor_detailed(Doctor_ID);
             //求和
-
-            var _list = list.Skip((page - 1) * limit).Take(limit).ToList();
-            return Ok(new { code = 0, data = _list, count = list.Count, });
+            var SumIncome = 0;//收入
+            foreach (var item in list.Where(s => s.seate == 1))
+            {
+                SumIncome = item._money;
+            }
+            var SumExpend = 0;  //支出
+            foreach (var item in list.Where(s => s.seate == 0))
+            {
+                SumExpend = item._money;
+            }
+            return Ok(new { SumIncome = SumIncome, SumExpend = SumExpend });
         }
+
+
+
+
+
+
+
+
         /// <summary>
         /// 获取用户余额
         /// </summary>
