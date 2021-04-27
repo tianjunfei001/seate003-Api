@@ -26,8 +26,13 @@ namespace PH7.ERP.Model
         public DateTime createtime { get; set; }     //创建日期
 
         //额外字段
+        //syq
+        public int XuHao { get; set; }       //序号
 
-
+        public int Patients { get; set; }   //病人数量
+        public int Total { get; set; }    //总金额
+        //-----
+        
         public string name { get; set; }               //患者真实姓名
         public string Grade_Name { get; set; }         //医生等级名称
         public int hospital_Id { get; set; }        //所属医院id
@@ -38,8 +43,8 @@ namespace PH7.ERP.Model
 
         //Hcm添加额外字段
         public int age { get; set; }  //年龄
-        public int Total { get; set; }   //总金额
-        public int Patients { get; set; } //总患者数量
+
+
         public string Tim { get { return createtime.ToString("yyyy-MM-dd"); } set { } } //总患者数量
 
     }

@@ -48,9 +48,13 @@ namespace PH7.ERP.API.Controllers
         /// 默认未接诊
         [HttpGet]
         [Route("GetDis")]
-        public IActionResult GetDis(int page = 1, int limit = 2)
+        public IActionResult GetDis(int page = 1, int limit = 2, string name = "")
         {
             List<Disease_records_Model> models = doctorLog_BLL.Get_Records();
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.name.Contains(name)).ToList();
+            }
 
             var _models = models.Skip((page - 1) * limit).Take(limit);
 
@@ -66,9 +70,13 @@ namespace PH7.ERP.API.Controllers
         //已接诊
         [HttpGet]
         [Route("GetDyes")]
-        public IActionResult GetDyes(int page = 1, int limit = 2)
+        public IActionResult GetDyes(int page = 1, int limit = 2, string name = "")
         {
             List<Disease_records_Model> models = doctorLog_BLL.Get_yes();
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.name.Contains(name)).ToList();
+            }
 
             var _models = models.Skip((page - 1) * limit).Take(limit);
 
@@ -109,9 +117,13 @@ namespace PH7.ERP.API.Controllers
         //诊断列表
         [HttpGet]
         [Route("GetAlist")]
-        public IActionResult GetAlist(string sickdate, int page = 1, int limit = 2)
+        public IActionResult GetAlist(string sickdate, int page = 1, int limit = 2, string name = "")
         {
             List<Disease_records_Model> models = doctorLog_BLL.Get_Administrationlist(sickdate);
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.name.Contains(name)).ToList();
+            }
 
             var _models = models.Skip((page - 1) * limit).Take(limit);
 
@@ -347,9 +359,31 @@ namespace PH7.ERP.API.Controllers
         [HttpGet]
         [Route("GetManagement")]
 
-        public IActionResult GetManagement(int pageindex, int pagesize, string GetName)
+        public IActionResult GetManagement(int pageindex, int pagesize)
         {
-            var list = doctorLog_BLL.GetDiagnosis(GetName);
+            var list = doctorLog_BLL.GetDiagnosis();
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].XuHao = i + 1;
+            }
+            var _list = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
+            return Ok(new { data = _list, count = list.Count });
+        }
+        /// <summary>
+        /// 医生端诊断列表 
+        /// </summary>
+        /// <param name="Patientlist">病人表</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPatientlist")]
+
+        public IActionResult GetPatientlist(int pageindex, int pagesize, string query, DateTime? Sj = null)
+        {
+            var list = doctorLog_BLL.GetPatient(query);
+            if (Sj != null)
+            {
+                list = list.Where(s => s.createtime == Sj).ToList();
+            }
             var _list = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
             return Ok(new { data = _list, count = list.Count });
         }

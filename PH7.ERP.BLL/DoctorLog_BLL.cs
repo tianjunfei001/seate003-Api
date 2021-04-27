@@ -335,6 +335,35 @@ namespace PH7.ERP.BLL
         }
 
 
+        /// <summary>
+        /// 医生端诊断管理  方法
+        /// </summary>
+        /// <param name="Diagnosis">诊断</param>
+        /// <returns></returns>
+        public List<Disease_records_Model> GetDiagnosis()
+        {
+            string sql = $"select createtime,sum(_money) Total,count(id) Patients from Disease_records  group by createtime";
+            var dataSet = helper.GetDataSet(sql);
+            List<Disease_records_Model> list = helper.DatatableTolist<Disease_records_Model>(dataSet.Tables[0]);
+            return list;
+        }
+        /// <summary>
+        /// 医生端诊断列表  方法
+        /// </summary>
+        /// <param name="Patient">病人</param>
+        /// <returns></returns>
+        public List<Patient_Model> GetPatient(string query)
+        {
+            string sql = $"select * from patient join Disease_records on Disease_records.patient_Id=patient.id where 1=1";
+            if (!string.IsNullOrEmpty(query))
+            {
+                sql += $" and patient.name like '%{query}%' or patient._phone like '%{query}%'";
+            }
+            var dataSet = helper.GetDataSet(sql);
+            List<Patient_Model> list = helper.DatatableTolist<Patient_Model>(dataSet.Tables[0]);
+            return list;
+        }
+
     }
 
 }

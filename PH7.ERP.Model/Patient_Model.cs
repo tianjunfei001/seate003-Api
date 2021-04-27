@@ -38,6 +38,7 @@ namespace PH7.ERP.Model
         public int _money { get; set; }          //金额
 
         public int seate { get; set; }               //是否接诊
+        public int evaluate { get; set; }            //评价
 
 
     }
