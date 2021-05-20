@@ -29,6 +29,9 @@ namespace PH7.ERP.Model
         public int Grade_Id { get; set; }            //医生等级id
         public DateTime createtime { get; set; }     //创建时间
 
+        public string identity_img { get; set; }      //--身份证img
+        public string Practice_img { get; set; }      //--医师执业证书
+
         //额外字段
         public string GradeName { get; set; }       //医生等级名字
         public int Years { get; set; }           //年限
@@ -41,6 +44,8 @@ namespace PH7.ERP.Model
         public string Grade_name { get; set; } //账号管理医生等级名称
         public string hospitalName { get; set; } //账号管理医生隶属医院名称
 
+        //
+        public int XuHao { get; set; }          //序号
 
     }
 }

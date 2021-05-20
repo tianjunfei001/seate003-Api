@@ -10,6 +10,7 @@ using PH7.ERP.BLL;
 using PH7.ERP.DAL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,7 +39,9 @@ namespace PH7.ERP.API
             services.AddTransient<Grade_BLL>();
             services.AddTransient<Patient_BLL>();
             services.AddTransient<Disease_records_BLL>();
-            
+            services.AddTransient<Live_TV_BLL>();
+
+
 
             //1.配置跨域处理，允许所有来源： 
             services.AddCors(options =>
@@ -50,8 +53,27 @@ namespace PH7.ERP.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PH7.ERP.API", Version = "v1" });
+
+
+
+                // 为 Swagger 设置xml文档注释路径
+                var basePath = AppContext.BaseDirectory;
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //当前接口目录下生成该文件 bin\Debug\netcoreapp3.1\MyDemo.WebApi.xml
+
+                var xmlPath = Path.Combine(basePath, "PH7.ERP.API.xml");
+                if (File.Exists(xmlPath))
+                {
+                    c.IncludeXmlComments(xmlPath, true);
+                }
+
             });
+
+
         }
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,18 +84,25 @@ namespace PH7.ERP.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PH7.ERP.API v1"));
             }
+
+
+
+
             app.UseCors("自定义的跨域策略名称");//必须位于UserMvc之前 
+            app.UseStaticFiles();               //允许静态图片
             app.UseRouting();
             //
-           
+
 
 
             app.UseAuthorization();
 
+            //路由设置 默认
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
     }
+
 }

@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PH7.ERP.API</name>
+    </assembly>
+    <members>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDepaList(System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            获取科室管理页面 （问诊次数 医生数量）
+            </summary>
+            <param name="id"></param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetGradeList(System.Int32,System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            获取等级管理页面 （问诊次数 医生数量）
+            </summary>
+            <param name="hospital_Id"> 医院id</param>
+            <param name="Department_Id">科室id</param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDoct_relationList(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            主治医师列表
+            </summary>
+            <param name="hospital_Id"> 医院id</param>
+            <param name="Department_Id">科室id</param>
+            <param name="Grade_Id">医生等级id</param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDiseaeList(System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            医生看过的患者
+            </summary>
+            <param name="Doctor_Id"></param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetPati_DiagnosisList(System.Int32)">
+            <summary>
+            诊断报告表
+            </summary>
+            <param name="Disease_records_id">诊断记录表ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetPatientList(System.Int32,System.Int32,System.String)">
+            <summary>
+            患者列表（分页，查询）
+            </summary>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDisease_recordsList(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            患者记录表 联查
+            </summary>
+            <param name="patient_Id">患者id</param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDoct_State_relationList(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            审核管理医生页面方法 判断状态
+            </summary>
+            <param name="state">状态 0待审核 1审核通过 2审核失败</param>
+            <param name="page"></param>
+            <param name="limit"></param>
+            <param name="Years">年限查询</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDoctorYuan(System.Int32)">
+            <summary>
+            查看未通过审核方法显示原因  两表联查
+            </summary>
+            <param name="DoctorLog_id">医生id</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetDoctorLogList(System.Int32,System.Int32,System.String)">
+            <summary>
+            获取医生管理页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetAddDoctorLog">
+            <summary>
+            添加修改医生管理方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetPatient_List(System.Int32,System.Int32,System.String)">
+            <summary>
+            获取患者管理页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetFanPatient_List(System.Int32)">
+            <summary>
+            反填患者
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.BackstageController.GetUpdPatient_List(PH7.ERP.Model.Patient_Model)">
+            <summary>
+            修改患者方法
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetDis(System.Int32,System.Int32,System.String)">
+            默认未接诊
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetDoctLog(System.String,System.String)">
+            <summary>
+            账号密码 登录方法
+            </summary>
+            <param name="userName"></param>
+            <param name="Password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetDoctLogHome(System.String)">
+            <summary>
+            手机号登录 判断是否成功
+            </summary>
+            <param name="cellPhone">手机号码</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetDoctLog_Zhuci(PH7.ERP.Model.DoctorLog_Model)">
+            <summary>
+            医生端注册页面 注册方法
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetPlatform(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            接诊台显示查询 ——平台
+            </summary>
+            <param name="Sname">查询患者姓名手机号</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetDoctor_detailed(System.Int32,System.DateTime,System.DateTime,System.Int32,System.Int32)">
+            <summary>
+            流水明细
+            </summary>
+            <param name="Doctor_ID"></param>
+            <param name="limit"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetIncomeExpend(System.Int32)">
+            <summary>
+            收入和支出
+            </summary>
+            <param name="Doctor_ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.Getbalance(System.Int32)">
+            <summary>
+            获取用户余额
+            </summary>
+            <param name="Doctor_ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetBindCardlist(System.Int32,System.Int32)">
+            <summary>
+            获取医生绑定的银行卡
+            </summary>
+            <param name = "id" ></param >
+            <param name="Doctor_ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetPersonal">
+            <summary>
+            医生端个人信息显示
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetPassword(System.String,System.String)">
+            <summary>
+            医生端密码信息修改
+            </summary>
+            <param name="Personal">个人</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetChangeUser(System.String,System.String,System.String)">
+            <summary>
+            医生端修改用户密码 
+            </summary>
+            <param name="ChangeUser">改用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetManagement(System.Int32,System.Int32)">
+            <summary>
+            医生端诊断管理
+            </summary>
+            <param name="Management">管理</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetPatientlist(System.Int32,System.Int32,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            医生端诊断列表 
+            </summary>
+            <param name="Patientlist">病人表</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetLive_TVList(System.Int32,System.String)">
+            <summary>
+            直播管理
+            </summary>
+            <param name="id">医生id</param>
+            <returns></returns>
+        </member>
+        <member name="F:PH7.ERP.API.Controllers.DoctorLogController.url">
+            ========================================程序配置参数区开始
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.GetYan(System.String)">
+            ========================================程序配置参数区结束
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.sendSmsCode(System.String,System.Int32,System.String)">
+            <summary>
+            发生短信验证码
+            </summary>
+            <param name="to">手机号</param>
+            <param name="template">短信模板ID</param>
+            <param name="smscode">验证码</param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.DoctorLogController.getsign(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            获取param签名
+            </summary>
+            <param name="sParams"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PH7.ERP.API.Controllers.HttpClient">
+            <summary>
+            短信帮助类
+            </summary>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.HttpClient.HttpPost(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            POST请求与获取结果  
+            </summary>
+            <param name="Url"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.HttpClient.HttpPost(System.String,System.String)">
+            <summary>  
+            POST请求与获取结果  
+            </summary>  
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.PatientController.GetPatientRegister(PH7.ERP.Model.Patient_Model)">
+            <summary>
+            患者手机端注册方法 返回当前id
+            </summary>
+            <param name="m"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PH7.ERP.API.Controllers.ValuesController.GetCe">
+            <summary>
+            测试
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

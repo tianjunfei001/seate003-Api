@@ -40,6 +40,7 @@ namespace PH7.ERP.Model
         public int seate { get; set; }               //是否接诊
         public int evaluate { get; set; }            //评价
 
-
+        //
+        public int XuHao { get; set; }          //序号
     }
 }

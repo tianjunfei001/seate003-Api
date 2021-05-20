@@ -5,6 +5,11 @@
     <UserSecretsId>f5480971-07cc-442e-b5d6-849eeb1d1560</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\田俊飞\Desktop\256\PH7.ERP.API\PH7.ERP.API.xml</DocumentationFile>
+    <NoWarn>1701;1702</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -13,5 +18,13 @@
     <ProjectReference Include="..\PH7.ERP.BLL\PH7.ERP.BLL.csproj" />
     <ProjectReference Include="..\PH7.ERP.Model\PH7.ERP.Model.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PH7.ERP.API.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

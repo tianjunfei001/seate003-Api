@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace PH7.ERP.API.Controllers
 {
@@ -22,10 +24,11 @@ namespace PH7.ERP.API.Controllers
         DoctorLog_BLL doctorLog_BLL;
         Disease_records_BLL disease_Records_BLL;
         Patient_BLL patient_BLL;
+        IWebHostEnvironment webHost;
         
 
         //构造函数
-        public BackstageController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL)
+        public BackstageController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL,IWebHostEnvironment web)
         {
             hospital_BLL = _BLL;
             department_BLL = _department_BLL;
@@ -33,6 +36,7 @@ namespace PH7.ERP.API.Controllers
             doctorLog_BLL = _doctorLog_BLL;
             disease_Records_BLL = _disease_Records_BLL;
             patient_BLL = _patient_BLL;
+            webHost = web;
         }
 
         //获取医院表表
@@ -51,7 +55,11 @@ namespace PH7.ERP.API.Controllers
         public IActionResult GetDepartment(int hospital_Id=-1)
         {
             List<Department_Model> models = department_BLL.GetShowTable<Department_Model>();
-            models = models.Where(p => p.hospital_Id.Equals(hospital_Id)).ToList();
+            if (hospital_Id>-1)
+            {
+                models = models.Where(p => p.hospital_Id.Equals(hospital_Id)).ToList();
+            }
+            
 
             return Ok(new { data = models });
         }
@@ -62,7 +70,11 @@ namespace PH7.ERP.API.Controllers
         public IActionResult GetGrade(int Department_Id=-1)
         {
             List<Grade_Model> models = grade_BLL.GetShowTable<Grade_Model>();
-            models = models.Where(p => p.Department_ID.Equals(Department_Id)).ToList();
+            if (Department_Id>-1)
+            {
+                models = models.Where(p => p.Department_ID.Equals(Department_Id)).ToList();
+            }
+            
 
             return Ok(new { data = models });
         }
@@ -425,14 +437,7 @@ namespace PH7.ERP.API.Controllers
             return Ok(new { msg = h });
         }
 
-        //删除患者方法
-        [HttpGet]
-        [Route("GetDelPatient")]
-        public IActionResult GetDelPatient(string id)
-        {
-            int h = doctorLog_BLL.GetDelTable<Patient_Model>(id, "id");
-            return Ok(new { msg = h });
-        }
+       
         //修改患者方法
         [HttpPost]
         [Route("GetUpdPatient")]
@@ -545,6 +550,272 @@ namespace PH7.ERP.API.Controllers
         }
 
 
+        //-------------账号管理 田俊飞
+        /// <summary>
+        /// 获取医生管理页面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDoctorLogList")]
+        public IActionResult GetDoctorLogList(int page = 1, int limit = 5,string name = "")
+        {
+
+
+            List<DoctorLog_Model> models = doctorLog_BLL.GetDoctorLogList();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.Name.Contains(name)).ToList();
+            }
+            for (int i = 0; i < models.Count; i++)
+            {
+                models[i].XuHao = i +1;
+            }
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+            
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = _models,
+                count = models.Count
+            });
+
+        }
+
+
+        /// <summary>
+        /// 添加修改医生管理方法
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("GetAddDoctorLog")]
+        public IActionResult GetAddDoctorLog()
+        {
+
+
+            var www = webHost.ContentRootPath; //获取更目录
+            var phat = $"{www}/wwwroot/imgs/";   //保存文件夹所在的位置
+
+            if (!System.IO.Directory.Exists(phat))  //判断文件夹是否存在
+            {
+                System.IO.Directory.CreateDirectory(phat);  //创建一个文件夹
+            }
+
+            //创建一个MOdel
+            DoctorLog_Model m = new DoctorLog_Model();
+            m.id = Convert.ToInt32(Request.Form["id"]);
+            m.userName = Request.Form["userName"];
+            m.Name= Request.Form["Name"];
+            m.cellPhone= Request.Form["cellPhone"];
+            m.Grade_Id= Convert.ToInt32(Request.Form["Grade_Id"]);
+            m.Department_Id= Convert.ToInt32(Request.Form["Department_Id"]);
+            m.hospital_Id=Convert.ToInt32(Request.Form["hospital_Id"]);
+            m._password= Request.Form["_password"];
+            m._certificate = Request.Form["_certificate2"];
+            m.identity_img = Request.Form["identity_img2"];
+            m.Practice_img = Request.Form["Practice_img2"];
+            //文件
+            var files = Request.Form.Files;       
+            
+
+            if (m.id!=0)
+            {
+                //删除文件夹中图片
+               
+                
+                
+
+                //修改方法
+                //遍历
+                foreach (var item in files)
+                {
+                    //名字
+                    var fileName = item.FileName;
+                    if (item.Name.Equals("_certificate"))
+                    {
+                        if (m._certificate != null && !System.IO.Directory.Exists($"{www}/wwwroot/" + m._certificate))
+                        {
+                            var pat = $"{www}/wwwroot/" + m._certificate;
+                            System.IO.File.Delete(pat);
+                        }
+                        m._certificate = "imgs/zhen" + item.FileName;
+                        fileName = "zhen" + fileName;
+                    }
+                    if (item.Name.Equals("identity_img"))
+                    {
+                        if (m.identity_img != null && !System.IO.Directory.Exists($"{www}/wwwroot/" + m.identity_img))
+                        {
+                            var pat = $"{www}/wwwroot/" + m.identity_img;
+                            System.IO.File.Delete(pat);
+                        }
+                        m.identity_img = "imgs/sheng" + item.FileName;
+                        fileName = "sheng" + fileName;
+                    }
+                    if (item.Name.Equals("Practice_img"))
+                    {
+                        if (m.Practice_img != null && !System.IO.Directory.Exists($"{www}/wwwroot/" + m.Practice_img))
+                        {
+                            var pat = $"{www}/wwwroot/" + m.Practice_img;
+                            System.IO.File.Delete(pat);
+                        }
+                        m.Practice_img = "imgs/zhi" + item.FileName;
+                        fileName = "zhi" + fileName;
+                    }
+                    //数据流上传
+                    using (System.IO.Stream sr = System.IO.File.Create($"{phat}{fileName}"))
+                    {
+                        item.CopyTo(sr);
+                    }
+                    
+
+
+                }
+                int h = doctorLog_BLL.GetUpdDoctorLog(m);
+                return Ok(new { state = h >= 1 ? true : false, msg = h >= 1 ? "修改成功！" : "修改失败！" });
+            }
+            else
+            {
+                //添加方法
+                //遍历
+                foreach (var item in files)
+                {
+                    //名字
+                    var fileName = item.FileName;
+                    if (item.Name.Equals("_certificate"))
+                    {
+                        m._certificate = "imgs/zhen" + item.FileName;
+                        fileName = "zhen" + fileName;
+                    }
+                    if (item.Name.Equals("identity_img"))
+                    {
+                        m.identity_img = "imgs/sheng" + item.FileName;
+                        fileName = "sheng" + fileName;
+                    }
+                    if (item.Name.Equals("Practice_img"))
+                    {
+                        m.Practice_img = "imgs/zhi" + item.FileName;
+                        fileName = "zhi" + fileName;
+                    }
+                    //数据流上传
+                    using (System.IO.Stream sr = System.IO.File.Create($"{phat}{fileName}"))
+                    {
+                        item.CopyTo(sr);
+                    }
+
+
+                }
+                int h = doctorLog_BLL.GetAddDoctorLog(m);
+                return Ok(new { state = h >= 1 ? true : false,msg=h>=1?"添加成功！":"添加失败！" }) ;
+            }
+
+           
+
+            
+
+
+        }
+
+        //反填医生方法
+        [HttpGet]
+        [Route("GetFanDoctorLog")]
+        public IActionResult GetFanDoctorLog(int id)
+        {
+            List<DoctorLog_Model> models = doctorLog_BLL.GetDoctorLogList();
+
+            DoctorLog_Model m = models.Where(p => p.id.Equals(id)).FirstOrDefault();
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = m,
+                count = models.Count
+            });
+        }
+
+        //删除医生方法
+        [HttpGet]
+        [Route("GetDelDoctorLog")]
+        public IActionResult GetDelDoctorLog(string id)
+        {
+            int h = doctorLog_BLL.GetDelTable<DoctorLog_Model>(id, "id");
+            return Ok(new { msg = h });
+        }
+
+
+        /// <summary>
+        /// 获取患者管理页面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetPatient_List")]
+        public IActionResult GetPatient_List(int page = 1, int limit = 5, string name = "")
+        {
+
+
+            List<Patient_Model> models = patient_BLL.GetShowTable<Patient_Model>();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(p => p.userName.Contains(name)).ToList();
+            }
+            for (int i = 0; i < models.Count; i++)
+            {
+                models[i].XuHao = i + 1;
+            }
+            var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = _models,
+                count = models.Count
+            });
+
+        }
+
+        /// <summary>
+        /// 反填患者
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetFanPatient_List")]
+        public IActionResult GetFanPatient_List(int id)
+        {
+            List<Patient_Model> patients = patient_BLL.GetShowTable<Patient_Model>();
+            Patient_Model patient = patients.Where(p => p.id.Equals(id)).FirstOrDefault();
+            return Ok(new
+            {
+                code = 0,
+                msg = "",
+                data = patient,
+                count = patients.Count
+            });
+        }
+
+        /// <summary>
+        /// 修改患者方法
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("GetUpdPatient_List")]
+        public IActionResult GetUpdPatient_List(Patient_Model model)
+        {
+            int h = patient_BLL.GetupdPatient(model);
+            return Ok(new { state = h >= 1 ? true : false, msg = h >= 1 ? "修改成功！" : "修改失败！" });
+        }
+
+        //删除患者方法
+        [HttpGet]
+        [Route("GetDelPatient")]
+        public IActionResult GetDelPatient(string id)
+        {
+            int h = patient_BLL.GetDelTable<Patient_Model>(id, "id");
+            return Ok(new { msg = h });
+        }
 
     }
 }

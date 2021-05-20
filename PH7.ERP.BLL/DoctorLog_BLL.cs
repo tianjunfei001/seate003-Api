@@ -364,6 +364,48 @@ namespace PH7.ERP.BLL
             return list;
         }
 
+
+
+        //--------------------------------田俊飞  账号管理
+        /// <summary>
+        /// 获取医生管理页面
+        /// </summary>
+        /// <returns></returns>
+        public List<DoctorLog_Model> GetDoctorLogList()
+        {
+            string sql = $"select hospitalName,Department.name as Department_name,Grade.name as Grade_name,DoctorLog.* from hospital join Department on hospital.id = Department.hospital_Id join Grade on Department.id = Grade.Department_ID join DoctorLog on Grade.id = DoctorLog.Grade_Id";
+            DataSet dataSet = helper.GetDataSet(sql);
+            List<DoctorLog_Model> list = helper.DatatableTolist<DoctorLog_Model>(dataSet.Tables[0]);
+            return list;
+
+        }
+
+        /// <summary>
+        /// 添加医生账户
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetAddDoctorLog(DoctorLog_Model m)
+        {
+
+            string sql = $"insert into DoctorLog(Name,_password,cellPhone,hospital_Id,Department_Id,Grade_Id,_certificate,identity_img,Practice_img,userName) values('{m.Name}', '{m._password}', '{m.cellPhone}', {m.hospital_Id}, {m.Department_Id}, {m.Grade_Id}, '{m._certificate}', '{m.identity_img}', '{m.Practice_img}','{m.userName}')";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+
+        /// <summary>
+        /// 修改医生账户方法
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public int GetUpdDoctorLog(DoctorLog_Model m)
+        {
+            string sql = $"update DoctorLog set Name='{m.Name}',_password='{m._password}',cellPhone='{m.cellPhone}',hospital_Id={m.hospital_Id},Department_Id={m.Department_Id},Grade_Id={m.Grade_Id},_certificate='{m._certificate}',identity_img='{m.identity_img}',Practice_img='{m.Practice_img}' where id={m.id}";
+            int h = helper.ExceuteNonQuery(sql);
+            return h;
+        }
+
+
     }
 
 }

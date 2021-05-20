@@ -29,11 +29,12 @@ namespace PH7.ERP.API.Controllers
         Patient_BLL patient_BLL;
         Doctor_detailed_BLL doctor_Detailed_Bll;
         Doctor_money_BLL doctor_Money_BLL;
+        Live_TV_BLL live_TV_BLL;
 
 
         //构造函数
         //构造函数
-        public DoctorLogController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL, Doctor_detailed_BLL _doctor_Detailed_Bll, Doctor_money_BLL _doctor_Money_BLL)
+        public DoctorLogController(Hospital_BLL _BLL, Department_BLL _department_BLL, Grade_BLL _grade_BLL, DoctorLog_BLL _doctorLog_BLL, Disease_records_BLL _disease_Records_BLL, Patient_BLL _patient_BLL, Doctor_detailed_BLL _doctor_Detailed_Bll, Doctor_money_BLL _doctor_Money_BLL,Live_TV_BLL _live_TV_BLL)
         {
             hospital_BLL = _BLL;
             department_BLL = _department_BLL;
@@ -43,6 +44,7 @@ namespace PH7.ERP.API.Controllers
             patient_BLL = _patient_BLL;
             doctor_Detailed_Bll = _doctor_Detailed_Bll;
             doctor_Money_BLL = _doctor_Money_BLL;
+            live_TV_BLL = _live_TV_BLL;
         }
         /////////医生端接诊台
         /// 默认未接诊
@@ -67,6 +69,7 @@ namespace PH7.ERP.API.Controllers
             });
         }
 
+       
         //已接诊
         [HttpGet]
         [Route("GetDyes")]
@@ -300,8 +303,8 @@ namespace PH7.ERP.API.Controllers
         /// <summary>
         /// 获取医生绑定的银行卡
         /// </summary>
-        /// <param name = "id" ></ param >
-        /// < param name="Doctor_ID"></param>
+        /// <param name = "id" ></param >
+        /// <param name="Doctor_ID"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("GetBindCardlist")]
@@ -317,7 +320,6 @@ namespace PH7.ERP.API.Controllers
         /// <summary>
         /// 医生端个人信息显示
         /// </summary>
-        /// <param name="Personal">个人</param>
         /// <returns></returns>
         [HttpGet]
         [Route("GetPersonal")]
@@ -387,6 +389,42 @@ namespace PH7.ERP.API.Controllers
             var _list = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
             return Ok(new { data = _list, count = list.Count });
         }
+
+
+
+
+        /// <summary>
+        /// 直播管理
+        /// </summary>
+        /// <param name="id">医生id</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetLive_TVList")]
+        public IActionResult GetLive_TVList(int id,string name="")
+        {
+            List<Live_TV_Model> models = live_TV_BLL.GetLive_TVList(id);
+            for (int i = 0; i < models.Count; i++)
+            {
+                models[i].XuHao = i + 1;
+            }
+            //if (!string.IsNullOrEmpty(name))
+            //{
+            //    models = models.Where(p => p.name.Contains(name)).ToList();
+            //}
+
+            //var _models = models.Skip((page - 1) * limit).Take(limit);
+
+            return Ok(new
+            {
+                data = models,
+                code = 0,
+                msg = "",
+                count = models.Count
+            });
+        }
+
+
+
 
 
 
