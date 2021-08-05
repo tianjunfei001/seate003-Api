@@ -45,6 +45,7 @@ namespace PH7.ERP.API.Controllers
         public IActionResult GetDospital()
         {
             List<Hospital_Model> models = hospital_BLL.GetHospital();
+            List<Hospital_Model> modelss = hospital_BLL.GetHospital();
 
             return Ok(new { data = models });
         }
