@@ -44,10 +44,10 @@ namespace PH7.ERP.API.Controllers
         [Route("GetHost")]
         public IActionResult GetDospital()
         {
-            List<Hospital_Model> models = hospital_BLL.GetHospital();
+            List<Hospital_Model> moaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadels = hospital_BLL.GetHospital();
             List<Hospital_Model> modeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalss = hospital_BLL.GetHospital();
 
-            return Ok(new { data = models });
+            return Ok(new { data = moaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadels });
         }
 
         //获取科室表
